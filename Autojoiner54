@@ -1,0 +1,1471 @@
+bit32 = {};
+local N = 32;
+local P = 2 ^ N;
+bit32.bnot = function(x)
+	x = x % P;
+	return (P - 1) - x;
+end;
+bit32.band = function(x, y)
+	if (y ~= 255) then
+	else
+		return x % 256;
+	end
+	if (y ~= 65535) then
+	else
+		return x % 65536;
+	end
+	if (y ~= 4294967295) then
+	else
+		return x % 4294967296;
+	end
+	x, y = x % P, y % P;
+	local r = 0;
+	local p = 1;
+	for i = 1, N do
+		local a, b = x % 2, y % 2;
+		x, y = math.floor(x / 2), math.floor(y / 2);
+		if ((a + b) == 2) then
+			r = r + p;
+		end
+		p = 2 * p;
+	end
+	return r;
+end;
+bit32.bor = function(x, y)
+	if (y ~= 255) then
+	else
+		return (x - (x % 256)) + 255;
+	end
+	if (y ~= 65535) then
+	else
+		return (x - (x % 65536)) + 65535;
+	end
+	if (y == 4294967295) then
+		return 4294967295;
+	end
+	x, y = x % P, y % P;
+	local r = 0;
+	local p = 1;
+	for i = 1, N do
+		local a, b = x % 2, y % 2;
+		x, y = math.floor(x / 2), math.floor(y / 2);
+		if ((a + b) < 1) then
+		else
+			r = r + p;
+		end
+		p = 2 * p;
+	end
+	return r;
+end;
+bit32.bxor = function(x, y)
+	x, y = x % P, y % P;
+	local r = 0;
+	local p = 1;
+	for i = 1, N do
+		local a, b = x % 2, y % 2;
+		x, y = math.floor(x / 2), math.floor(y / 2);
+		if ((a + b) ~= 1) then
+		else
+			r = r + p;
+		end
+		p = 2 * p;
+	end
+	return r;
+end;
+bit32.lshift = function(x, s_amount)
+	if (math.abs(s_amount) < N) then
+	else
+		return 0;
+	end
+	x = x % P;
+	if (s_amount < 0) then
+		return math.floor(x * (2 ^ s_amount));
+	else
+		return (x * (2 ^ s_amount)) % P;
+	end
+end;
+bit32.rshift = function(x, s_amount)
+	if (math.abs(s_amount) >= N) then
+		return 0;
+	end
+	x = x % P;
+	if (s_amount > 0) then
+		return math.floor(x * (2 ^ -s_amount));
+	else
+		return (x * (2 ^ -s_amount)) % P;
+	end
+end;
+bit32.arshift = function(x, s_amount)
+	if (math.abs(s_amount) < N) then
+	else
+		return 0;
+	end
+	x = x % P;
+	if (s_amount > 0) then
+		local add = 0;
+		if (x < (P / 2)) then
+		else
+			add = P - (2 ^ (N - s_amount));
+		end
+		return math.floor(x * (2 ^ -s_amount)) + add;
+	else
+		return (x * (2 ^ -s_amount)) % P;
+	end
+end;
+local v0 = string.char;
+local v1 = string.byte;
+local v2 = string.sub;
+local v3 = bit32 or bit;
+local v4 = v3.bxor;
+local v5 = table.concat;
+local v6 = table.insert;
+local function v7(v35, v36)
+	local FlatIdent_76979 = 0;
+	local v37;
+	while true do
+		if (FlatIdent_76979 ~= 1) then
+		else
+			return v5(v37);
+		end
+		if (FlatIdent_76979 == 0) then
+			v37 = {};
+			for v104 = 1, #v35 do
+				v6(v37, v0(v4(v1(v2(v35, v104, v104 + 1)), v1(v2(v36, 1 + (v104 % #v36), 1 + (v104 % #v36) + 1))) % 256));
+			end
+			FlatIdent_76979 = 1;
+		end
+	end
+end
+local v8 = v7("\243\204\213\32\237\186", "\126\177\163\187\69\134\219\167");
+local v9 = v7("\1\194\36\192\247\34\141\0\202\245\45\200\56", "\156\67\173\74\165");
+local v10 = game:GetService(v7("\23\184\91\19\155\51\79", "\38\84\215\41\118\220\70"));
+local v11 = game:GetService(v7("\101\5\39\0\215\94\6\55\6\205\85\4\52\27\253\85", "\158\48\118\66\114"));
+local v12 = game:GetService(v7("\153\49\30\5\118\183\237\162\39\21", "\155\203\68\112\86\19\197"));
+local v13 = game:GetService(v7("\112\212\36\232\85\121\233\209\72\205\35\232\109\121\235\249\65\216\36", "\152\38\189\86\156\32\24\133"));
+local function v14(v38)
+	print(v7("\199\117\168\72\249\92\166\123\188", "\38\156\55\199") .. tostring(v38));
+end
+local v15, v16 = {}, false;
+local function v17(v39)
+	table.insert(v15, v39);
+end
+local function v18(v40)
+	local v41 = 0;
+	local v42;
+	while true do
+		if (v41 ~= (0 + 0)) then
+		else
+			v42 = 0 - 0;
+			while true do
+				if (v42 ~= (337 - (144 + 192))) then
+				else
+					task.spawn(function()
+						local FlatIdent_6D4CB = 0;
+						local v161;
+						local v162;
+						while true do
+							if (FlatIdent_6D4CB ~= 1) then
+							else
+								while true do
+									if (v161 ~= (0 + 0)) then
+									else
+										v162 = 0;
+										while true do
+											if ((0 + 0) ~= v162) then
+											else
+												while #v15 > 0 do
+													local FlatIdent_12703 = 0;
+													local v182;
+													local v183;
+													while true do
+														if (FlatIdent_12703 ~= 0) then
+														else
+															v182 = 0 + 0;
+															v183 = nil;
+															FlatIdent_12703 = 1;
+														end
+														if (FlatIdent_12703 ~= 1) then
+														else
+															while true do
+																if (v182 ~= (1504 - (363 + 1141))) then
+																else
+																	v183 = table.remove(v15, 1);
+																	if (v183.kind == v7("\162\114\126", "\35\200\29\28\72\115\20\154")) then
+																		local FlatIdent_23BE8 = 0;
+																		local v188;
+																		while true do
+																			if (FlatIdent_23BE8 ~= 0) then
+																			else
+																				v188 = 0;
+																				while true do
+																					if (v188 ~= (1580 - (1183 + 397))) then
+																					else
+																						local FlatIdent_25011 = 0;
+																						while true do
+																							if (FlatIdent_25011 ~= 0) then
+																							else
+																								v40(v183.id);
+																								v12.Heartbeat:Wait();
+																								FlatIdent_25011 = 1;
+																							end
+																							if (FlatIdent_25011 ~= 1) then
+																							else
+																								v188 = 1;
+																								break;
+																							end
+																						end
+																					end
+																					if (v188 ~= (2 - 1)) then
+																					else
+																						v12.Heartbeat:Wait();
+																						break;
+																					end
+																				end
+																				break;
+																			end
+																		end
+																	elseif (v183.kind == v7("\10\188\195\214\157\56", "\84\121\223\177\191\237\76")) then
+																		local FlatIdent_781F8 = 0;
+																		local v189;
+																		while true do
+																			if (FlatIdent_781F8 ~= 0) then
+																			else
+																				v189 = 0 + 0;
+																				while true do
+																					if (v189 ~= 0) then
+																					else
+																						v183.func();
+																						v12.Heartbeat:Wait();
+																						break;
+																					end
+																				end
+																				break;
+																			end
+																		end
+																	end
+																	break;
+																end
+															end
+															break;
+														end
+													end
+												end
+												v16 = false;
+												break;
+											end
+										end
+										break;
+									end
+								end
+								break;
+							end
+							if (FlatIdent_6D4CB ~= 0) then
+							else
+								v161 = 216 - (42 + 174);
+								v162 = nil;
+								FlatIdent_6D4CB = 1;
+							end
+						end
+					end);
+					break;
+				end
+				if (v42 ~= 0) then
+				else
+					local FlatIdent_6FA1 = 0;
+					while true do
+						if (FlatIdent_6FA1 ~= 1) then
+						else
+							v42 = 1 + 0;
+							break;
+						end
+						if (0 ~= FlatIdent_6FA1) then
+						else
+							if v16 then
+								return;
+							end
+							v16 = true;
+							FlatIdent_6FA1 = 1;
+						end
+					end
+				end
+			end
+			break;
+		end
+	end
+end
+local v19 = v7("\136\66\204\161\54\16\49\129\153\68\200\169\52\95\36\129\246\22\234\168\51\92\60\200\251\126\220\162\122\96\34\196\182\95\220\173", "\161\219\54\169\192\90\48\80");
+local v20 = false;
+local v21, v22, v23 = nil, nil, nil;
+local function v24(v43)
+	return (typeof(v43) == v7("\96\76\19\49\72\76\3\32", "\69\41\34\96")) and (v43.Parent ~= nil) and v43:IsDescendantOf(game);
+end
+local function v25()
+	local FlatIdent_940A0 = 0;
+	local v44;
+	local v45;
+	local v46;
+	local v47;
+	local v48;
+	local v49;
+	while true do
+		if (1 ~= FlatIdent_940A0) then
+		else
+			v46 = nil;
+			v47 = nil;
+			FlatIdent_940A0 = 2;
+		end
+		if (FlatIdent_940A0 ~= 2) then
+		else
+			v48 = nil;
+			v49 = nil;
+			FlatIdent_940A0 = 3;
+		end
+		if (FlatIdent_940A0 == 0) then
+			v44 = 0;
+			v45 = nil;
+			FlatIdent_940A0 = 1;
+		end
+		if (FlatIdent_940A0 ~= 3) then
+		else
+			while true do
+				if (v44 == 1) then
+					v48, v49 = pcall(function()
+						local FlatIdent_703C8 = 0;
+						local v133;
+						local v134;
+						local v135;
+						local v136;
+						while true do
+							if (FlatIdent_703C8 ~= 2) then
+							else
+								while true do
+									if (v133 == (0 + 0)) then
+										local FlatIdent_17196 = 0;
+										while true do
+											if (FlatIdent_17196 ~= 1) then
+											else
+												v133 = 2 - 1;
+												break;
+											end
+											if (FlatIdent_17196 ~= 0) then
+											else
+												v134 = 0;
+												v135 = nil;
+												FlatIdent_17196 = 1;
+											end
+										end
+									end
+									if ((1934 - (565 + 1368)) ~= v133) then
+									else
+										v136 = nil;
+										while true do
+											local FlatIdent_5BA5E = 0;
+											local v164;
+											while true do
+												if (FlatIdent_5BA5E == 0) then
+													v164 = 0;
+													while true do
+														if (v164 ~= (0 - 0)) then
+														else
+															if (v134 ~= (1662 - (1477 + 184))) then
+															else
+																local FlatIdent_74348 = 0;
+																while true do
+																	if (FlatIdent_74348 ~= 0) then
+																	else
+																		if not v136 then
+																			return nil;
+																		end
+																		return v136:FindFirstChild(v7("\226\49\38\225\219\136\222\40\51\233\208", "\202\171\92\71\134\190")) or v136:FindFirstChildOfClass(v7("\0\204\45\143\44\227\57\156\61\206\34", "\232\73\161\76")) or ((v136.ClassName == v7("\146\212\67\90\27\153\204\86\73\17\181", "\126\219\185\34\61")) and v136) or nil;
+																	end
+																end
+															end
+															if (v134 ~= (0 - 0)) then
+															else
+																local v181 = 0 + 0;
+																while true do
+																	if (v181 ~= 0) then
+																	else
+																		v135 = v45.MainFrame.ContentContainer.TabContent_Server;
+																		v136 = v135:GetChildren()[861 - (564 + 292)];
+																		v181 = 1 - 0;
+																	end
+																	if (v181 ~= (2 - 1)) then
+																	else
+																		v134 = 305 - (244 + 60);
+																		break;
+																	end
+																end
+															end
+															break;
+														end
+													end
+													break;
+												end
+											end
+										end
+										break;
+									end
+								end
+								break;
+							end
+							if (FlatIdent_703C8 ~= 1) then
+							else
+								v135 = nil;
+								v136 = nil;
+								FlatIdent_703C8 = 2;
+							end
+							if (FlatIdent_703C8 ~= 0) then
+							else
+								v133 = 1975 - (1913 + 62);
+								v134 = nil;
+								FlatIdent_703C8 = 1;
+							end
+						end
+					end);
+					if (not v46 or not v47 or not v47:IsA(v7("\56\203\70\102\92\120\235", "\135\108\174\62\18\30\23\147"))) then
+						local FlatIdent_8BF78 = 0;
+						local v139;
+						while true do
+							if (FlatIdent_8BF78 ~= 0) then
+							else
+								v139 = 0 + 0;
+								while true do
+									if (v139 ~= (476 - (41 + 435))) then
+									else
+										v20 = true;
+										v14(v7("\184\230\106\223\29\182\39\197\185\241\106\202\12\238\53\206\174\236\46\139\8\175\39\207", "\167\214\137\74\171\120\206\83"));
+										v139 = 1;
+									end
+									if (v139 ~= (1002 - (938 + 63))) then
+									else
+										return false;
+									end
+								end
+								break;
+							end
+						end
+					end
+					if (not v48 or not v49 or ((v49.ClassName ~= v7("\162\253\51\90\253\133\158\228\38\82\246", "\199\235\144\82\61\152")) and not v49:IsA(v7("\51\19\161\63\37\3\173\63\8\24", "\75\103\118\217")))) then
+						v20 = true;
+						v14(v7("\201\91\48\30\182\23\201\20\114\1\173\10\200\90\48\21\173\94\193\93\104\17\189\94\215\85\100\28", "\126\167\52\16\116\217"));
+						return false;
+					end
+					v21 = v47;
+					v44 = 2 + 0;
+				end
+				if (v44 ~= (1128 - (936 + 189))) then
+				else
+					return true;
+				end
+				if ((0 + 0) ~= v44) then
+				else
+					if v20 then
+						if (v21 and v22 and v24(v21) and v24(v22)) then
+							return true;
+						else
+							v14(v7("\176\204\212\1\7\47\252\193\222\4\6\34\178\196\196\74\6\46\175\215\197\5\27\46\184\131\154\74\12\36\168\131\197\15\17\40\189\205\217\3\12\44", "\75\220\163\183\106\98"));
+							return false;
+						end
+					end
+					v45 = v10:FindFirstChild(v19);
+					if not v45 then
+						local FlatIdent_817B0 = 0;
+						local v140;
+						while true do
+							if (FlatIdent_817B0 ~= 0) then
+							else
+								v140 = 1613 - (1565 + 48);
+								while true do
+									local v156 = 0;
+									while true do
+										if (v156 ~= (0 + 0)) then
+										else
+											if ((1139 - (782 + 356)) ~= v140) then
+											else
+												return false;
+											end
+											if (v140 ~= 0) then
+											else
+												local FlatIdent_7909D = 0;
+												while true do
+													if (FlatIdent_7909D ~= 1) then
+													else
+														v140 = 1;
+														break;
+													end
+													if (FlatIdent_7909D ~= 0) then
+													else
+														v20 = true;
+														v14(v7("\16\181\132\35\153\49\185\153\50\220\12\157\158\62\153\12\181\159\119\223\13\175\133\51\131\66", "\185\98\218\235\87") .. v19);
+														FlatIdent_7909D = 1;
+													end
+												end
+											end
+											break;
+										end
+									end
+								end
+								break;
+							end
+						end
+					end
+					v46, v47 = pcall(function()
+						return v45.MainFrame.ContentContainer.TabContent_Server.Input.TextBox;
+					end);
+					v44 = 268 - (176 + 91);
+				end
+				if (v44 ~= 2) then
+				else
+					v22 = v49;
+					v23 = v45.MainFrame.ContentContainer.TabContent_Server;
+					v20 = true;
+					v14(v7("\253\7\96\133\184\28\241\205\32\52\147\244\27\243\221\32\36\192\167\12\255\203\43\51\147\178\12\240\196\55", "\156\168\78\64\224\212\121"));
+					v44 = 3;
+				end
+			end
+			break;
+		end
+	end
+end
+local function v26()
+	local FlatIdent_4CC24 = 0;
+	while true do
+		if (FlatIdent_4CC24 ~= 0) then
+		else
+			if v25() then
+				return v21, v22, v23;
+			end
+			return nil;
+		end
+	end
+end
+local function v27()
+	local FlatIdent_207CC = 0;
+	local v50;
+	while true do
+		if (FlatIdent_207CC ~= 0) then
+		else
+			v50 = 0;
+			while true do
+				if (v50 ~= (0 - 0)) then
+				else
+					local FlatIdent_6DC53 = 0;
+					while true do
+						if (0 == FlatIdent_6DC53) then
+							pcall(function()
+								v13:SendKeyEvent(true, Enum.KeyCode.Return, false, game);
+							end);
+							pcall(function()
+								v13:SendKeyEvent(false, Enum.KeyCode.Return, false, game);
+							end);
+							FlatIdent_6DC53 = 1;
+						end
+						if (1 ~= FlatIdent_6DC53) then
+						else
+							v50 = 1;
+							break;
+						end
+					end
+				end
+				if (v50 ~= (1 - 0)) then
+				else
+					pcall(function()
+						v13:SendKeyEvent(true, Enum.KeyCode.KeypadEnter, false, game);
+					end);
+					pcall(function()
+						v13:SendKeyEvent(false, Enum.KeyCode.KeypadEnter, false, game);
+					end);
+					break;
+				end
+			end
+			break;
+		end
+	end
+end
+local function v28(v51)
+	local FlatIdent_68E92 = 0;
+	local v52;
+	local v53;
+	local v54;
+	while true do
+		if (FlatIdent_68E92 ~= 4) then
+		else
+			if v54 then
+				local FlatIdent_45D37 = 0;
+				local v118;
+				local v119;
+				while true do
+					if (FlatIdent_45D37 ~= 1) then
+					else
+						while true do
+							if (v118 ~= (0 - 0)) then
+							else
+								v119 = v54:FindFirstChild(v7("\96\41\83\45\32", "\152\54\72\63\88\69\62"));
+								if (v119 and (v119:IsA(v7("\231\208\252\85\218\195\216\93\216\209\235", "\60\180\164\142")) or v119:IsA(v7("\119\92\15\44\36\249\36\89\82\16\44", "\114\56\62\101\73\71\141")) or v119:IsA(v7("\150\252\214\198\189\251\237\197\180\252\222", "\164\216\137\187")))) then
+									pcall(function()
+										v119.Value = tostring(v51);
+									end);
+								end
+								break;
+							end
+						end
+						break;
+					end
+					if (FlatIdent_45D37 ~= 0) then
+					else
+						v118 = 1018 - (697 + 321);
+						v119 = nil;
+						FlatIdent_45D37 = 1;
+					end
+				end
+			end
+			return v52;
+		end
+		if (FlatIdent_68E92 ~= 3) then
+		else
+			v27();
+			pcall(function()
+				v52:ReleaseFocus();
+			end);
+			FlatIdent_68E92 = 4;
+		end
+		if (FlatIdent_68E92 ~= 0) then
+		else
+			v51 = v51:gsub('"', "");
+			v51 = v51:gsub(" ", "");
+			FlatIdent_68E92 = 1;
+		end
+		if (FlatIdent_68E92 ~= 1) then
+		else
+			v52, v53, v54 = v26();
+			if not v52 then
+				local v117 = 1092 - (975 + 117);
+				while true do
+					if (v117 ~= (1875 - (157 + 1718))) then
+					else
+						local FlatIdent_29E69 = 0;
+						local v141;
+						while true do
+							if (FlatIdent_29E69 ~= 0) then
+							else
+								v141 = 0 + 0;
+								while true do
+									if (v141 ~= 0) then
+									else
+										local FlatIdent_466B2 = 0;
+										while true do
+											if (FlatIdent_466B2 ~= 0) then
+											else
+												v14(v7("\45\225\167\131\46\202\229\218\2\246\177\204\8\246\229\192\8\250\229\200\8\251\171\202\70", "\174\103\142\197"));
+												return nil;
+											end
+										end
+									end
+								end
+								break;
+							end
+						end
+					end
+				end
+			end
+			FlatIdent_68E92 = 2;
+		end
+		if (2 ~= FlatIdent_68E92) then
+		else
+			pcall(function()
+				local v105 = 0 - 0;
+				while true do
+					if (v105 ~= 0) then
+					else
+						v52.ClearTextOnFocus = false;
+						v52.TextEditable = true;
+						v105 = 3 - 2;
+					end
+					if (v105 ~= 1) then
+					else
+						v52:CaptureFocus();
+						break;
+					end
+				end
+			end);
+			v52.Text = tostring(v51);
+			FlatIdent_68E92 = 3;
+		end
+	end
+end
+local function v29()
+	local FlatIdent_882F4 = 0;
+	local v56;
+	local v57;
+	local v58;
+	local v59;
+	while true do
+		if (FlatIdent_882F4 ~= 0) then
+		else
+			v56 = 0 - 0;
+			v57 = nil;
+			FlatIdent_882F4 = 1;
+		end
+		if (FlatIdent_882F4 == 2) then
+			while true do
+				if (v56 ~= 0) then
+				else
+					local FlatIdent_32B97 = 0;
+					while true do
+						if (FlatIdent_32B97 ~= 0) then
+						else
+							v57, v58 = v26();
+							if not v58 then
+								local FlatIdent_580CB = 0;
+								local v142;
+								local v143;
+								while true do
+									if (FlatIdent_580CB ~= 1) then
+									else
+										while true do
+											if (v142 ~= (0 + 0)) then
+											else
+												v143 = 0 - 0;
+												while true do
+													if (v143 ~= 0) then
+													else
+														local v179 = 0 - 0;
+														local v180;
+														while true do
+															if (v179 ~= (1227 - (322 + 905))) then
+															else
+																v180 = 611 - (602 + 9);
+																while true do
+																	if (v180 ~= (1189 - (449 + 740))) then
+																	else
+																		local v187 = 872 - (826 + 46);
+																		while true do
+																			if (v187 ~= (947 - (245 + 702))) then
+																			else
+																				local FlatIdent_1013A = 0;
+																				while true do
+																					if (0 ~= FlatIdent_1013A) then
+																					else
+																						v14(v7("\248\233\56\188\230\252\30\198\242\62\188\230\240\4\198\166\55\189\179\240\15\147", "\107\178\134\81\210\198\158"));
+																						return false;
+																					end
+																				end
+																			end
+																		end
+																	end
+																end
+																break;
+															end
+														end
+													end
+												end
+												break;
+											end
+										end
+										break;
+									end
+									if (FlatIdent_580CB ~= 0) then
+									else
+										v142 = 0 - 0;
+										v143 = nil;
+										FlatIdent_580CB = 1;
+									end
+								end
+							end
+							FlatIdent_32B97 = 1;
+						end
+						if (FlatIdent_32B97 ~= 1) then
+						else
+							v56 = 1;
+							break;
+						end
+					end
+				end
+				if (v56 ~= (3 - 2)) then
+				else
+					local v124 = 0 + 0;
+					local v125;
+					while true do
+						if (v124 ~= (1898 - (260 + 1638))) then
+						else
+							v125 = 0;
+							while true do
+								if ((440 - (382 + 58)) ~= v125) then
+								else
+									local FlatIdent_40070 = 0;
+									while true do
+										if (FlatIdent_40070 ~= 0) then
+										else
+											v59 = false;
+											pcall(function()
+												if v58.Activate then
+													local FlatIdent_2A9F7 = 0;
+													while true do
+														if (FlatIdent_2A9F7 ~= 0) then
+														else
+															v58:Activate();
+															v59 = true;
+															break;
+														end
+													end
+												end
+											end);
+											FlatIdent_40070 = 1;
+										end
+										if (1 ~= FlatIdent_40070) then
+										else
+											v125 = 3 - 2;
+											break;
+										end
+									end
+								end
+								if (1 ~= v125) then
+								else
+									v56 = 2 + 0;
+									break;
+								end
+							end
+							break;
+						end
+					end
+				end
+				if (v56 ~= (3 - 1)) then
+				else
+					local FlatIdent_68856 = 0;
+					while true do
+						if (FlatIdent_68856 ~= 0) then
+						else
+							if (typeof(getconnections) ~= v7("\62\27\140\197\190\49\1\140", "\202\88\110\226\166")) then
+							else
+								local FlatIdent_63AE4 = 0;
+								local v144;
+								local v145;
+								local v146;
+								local v147;
+								while true do
+									if (1 == FlatIdent_63AE4) then
+										v146, v147 = pcall(getconnections, v58.MouseButton1Click);
+										if (v146 and v147) then
+											for v169, v170 in ipairs(v147) do
+												local FlatIdent_2A644 = 0;
+												local v171;
+												while true do
+													if (FlatIdent_2A644 ~= 0) then
+													else
+														v171 = 0 - 0;
+														while true do
+															if ((1205 - (902 + 303)) ~= v171) then
+															else
+																pcall(function()
+																	v170:Fire();
+																end);
+																v59 = true;
+																break;
+															end
+														end
+														break;
+													end
+												end
+											end
+										end
+										break;
+									end
+									if (FlatIdent_63AE4 == 0) then
+										v144, v145 = pcall(getconnections, v58.MouseButton1Up);
+										if (v144 and v145) then
+											for v166, v167 in ipairs(v145) do
+												local FlatIdent_31ECC = 0;
+												local v168;
+												while true do
+													if (FlatIdent_31ECC ~= 0) then
+													else
+														v168 = 0;
+														while true do
+															if (v168 ~= 0) then
+															else
+																pcall(function()
+																	v167:Fire();
+																end);
+																v59 = true;
+																break;
+															end
+														end
+														break;
+													end
+												end
+											end
+										end
+										FlatIdent_63AE4 = 1;
+									end
+								end
+							end
+							if not v59 then
+								pcall(function()
+									v58.MouseButton1Click:Fire();
+								end);
+								pcall(function()
+									v58.MouseButton1Up:Fire();
+								end);
+								pcall(function()
+									v58:Activate();
+								end);
+							end
+							FlatIdent_68856 = 1;
+						end
+						if (FlatIdent_68856 ~= 1) then
+						else
+							v56 = 3;
+							break;
+						end
+					end
+				end
+				if (v56 ~= 3) then
+				else
+					return true;
+				end
+			end
+			break;
+		end
+		if (FlatIdent_882F4 ~= 1) then
+		else
+			v58 = nil;
+			v59 = nil;
+			FlatIdent_882F4 = 2;
+		end
+	end
+end
+local function v30(v60)
+	local FlatIdent_7F3C8 = 0;
+	local v61;
+	local v62;
+	local v63;
+	while true do
+		if (FlatIdent_7F3C8 ~= 0) then
+		else
+			v61 = 0 - 0;
+			v62 = nil;
+			FlatIdent_7F3C8 = 1;
+		end
+		if (1 ~= FlatIdent_7F3C8) then
+		else
+			v63 = nil;
+			while true do
+				if ((0 - 0) ~= v61) then
+				else
+					local FlatIdent_3F7F4 = 0;
+					local v126;
+					local v127;
+					while true do
+						if (0 ~= FlatIdent_3F7F4) then
+						else
+							v126 = 0;
+							v127 = nil;
+							FlatIdent_3F7F4 = 1;
+						end
+						if (FlatIdent_3F7F4 ~= 1) then
+						else
+							while true do
+								if (v126 ~= (0 + 0)) then
+								else
+									v127 = 0;
+									while true do
+										if (v127 ~= (1691 - (1121 + 569))) then
+										else
+											v61 = 215 - (22 + 192);
+											break;
+										end
+										if (v127 ~= (683 - (483 + 200))) then
+										else
+											local FlatIdent_92F66 = 0;
+											while true do
+												if (FlatIdent_92F66 == 1) then
+													v127 = 1464 - (1404 + 59);
+													break;
+												end
+												if (FlatIdent_92F66 == 0) then
+													v62 = v28(v60);
+													if not v62 then
+														return;
+													end
+													FlatIdent_92F66 = 1;
+												end
+											end
+										end
+									end
+									break;
+								end
+							end
+							break;
+						end
+					end
+				end
+				if ((5 - 3) ~= v61) then
+				else
+					if not v63 then
+						v14(v7("\240\10\144\225\207\209\79\132\226\198\207\79\141\229\138\197\14\139\251\207\199\79\150\248\138\201\0\139\249", "\170\163\111\226\151"));
+					end
+					break;
+				end
+				if (v61 ~= 1) then
+				else
+					v12.Heartbeat:Wait();
+					v63 = pcall(v29);
+					v61 = 2;
+				end
+			end
+			break;
+		end
+	end
+end
+local function v31(v64)
+	local v65 = 0 - 0;
+	local v66;
+	local v67;
+	while true do
+		if (v65 ~= (765 - (468 + 297))) then
+		else
+			v66, v67 = loadstring(v64);
+			if v66 then
+				local v148, v149 = pcall(v66);
+				if not v148 then
+					v14(v7("\52\34\160\55\92\119\62\25\57\190\61\14\50\49\20\51\167\44\71\57\46\81\35\177\42\71\39\61\75\112", "\73\113\80\210\88\46\87") .. v149);
+				end
+			else
+				v14(v7("\178\35\192\23\167\148\34\200\10\247\132\47\217\23\227\193\41\223\0\232\147\118\141", "\135\225\76\173\114") .. v67);
+			end
+			break;
+		end
+	end
+end
+local function v32(v68)
+	local v69 = 0;
+	while true do
+		if (v69 ~= 0) then
+		else
+			if (type(v68) == v7("\9\249\170\185\162\186", "\199\122\141\216\208\204\221")) then
+			else
+				return;
+			end
+			if not string.find(v68, v7("\153\216\28\245\104\249\191\201\35\245\106\224\164\222\21", "\150\205\189\112\144\24")) then
+				local FlatIdent_94AF7 = 0;
+				local v150;
+				while true do
+					if (FlatIdent_94AF7 ~= 0) then
+					else
+						v150 = 562 - (334 + 228);
+						while true do
+							if (v150 ~= (0 - 0)) then
+							else
+								v14(v7("\7\157\175\77\23\155\24\30\34\196\238\28\9\200\2\21\55\146\186\94\94\200", "\112\69\228\223\44\100\232\113") .. v68);
+								v17({[v7("\223\22\9\215", "\230\180\127\103\179\214\28")]=v7("\134\10\93", "\128\236\101\63\38\132\33"),[v7("\165\173", "\175\204\201\113\36\214\139")]=v68});
+								break;
+							end
+						end
+						break;
+					end
+				end
+			else
+				local FlatIdent_7126B = 0;
+				local v151;
+				while true do
+					if (0 ~= FlatIdent_7126B) then
+					else
+						v151 = 0 - 0;
+						while true do
+							if ((0 - 0) == v151) then
+								v14(v7("\117\217\59\210\13\73\203\117\200\12\66\140\38\223\22\78\220\33\134\68", "\100\39\172\85\188") .. v68);
+								v17({[v7("\166\113\183\132", "\83\205\24\217\224")]=v7("\245\198\223\52\246\209", "\93\134\165\173"),[v7("\184\231\207\193", "\30\222\146\161\162\90\174\210")]=function()
+									v31(v68);
+								end});
+								break;
+							end
+						end
+						break;
+					end
+				end
+			end
+			break;
+		end
+	end
+end
+local function v33()
+	local v70 = Instance.new(v7("\214\77\98\15\224\64\87\31\236", "\106\133\46\16"));
+	v70.Name = v7("\122\47\125\249\81\65\114\47\122\242\95\82", "\32\56\64\19\156\58");
+	v70.ResetOnSpawn = false;
+	v70.Parent = v10;
+	local v74 = Instance.new(v7("\110\205\253\66\120\231\148\78\199\235", "\224\58\168\133\54\58\146"));
+	v74.Name = v7("\106\66\74\239\97\164\146\31\77\89\69", "\107\57\54\43\157\21\230\231");
+	v74.Size = UDim2.new(0 + 0, 436 - (141 + 95), 0 + 0, 102 - 62);
+	v74.AnchorPoint = Vector2.new(0.5 - 0, 0 + 0);
+	v74.Position = UDim2.new(0.5, 0, 0.07 - 0, 0 + 0);
+	v74.BackgroundColor3 = Color3.fromRGB(23 + 21, 42, 75 - 21);
+	v74.TextColor3 = Color3.fromRGB(151 + 104, 418 - (92 + 71), 126 + 129);
+	v74.Text = v7("\249\132\31\240\178\221\143\147\164\55\211\240", "\175\187\235\113\149\217\188");
+	v74.TextSize = 30 - 12;
+	v74.AutoButtonColor = true;
+	v74.Parent = v70;
+	Instance.new(v7("\9\134\162\67\241\119\125\46", "\24\92\207\225\44\131\25"), v74).CornerRadius = UDim.new(765 - (574 + 191), 10);
+	local v86 = Instance.new(v7("\127\214\160\88\55\124\73\214\180", "\29\43\179\216\44\123"));
+	v86.Name = v7("\136\240\19\88\188\205\53\95", "\44\221\185\64");
+	v86.Size = UDim2.new(0 + 0, 501 - 301, 0 + 0, 874 - (254 + 595));
+	v86.AnchorPoint = Vector2.new(0.5, 0);
+	v86.Position = UDim2.new(0.5, 126 - (55 + 71), 0.12 - 0, 0);
+	v86.BackgroundTransparency = 1;
+	v86.TextColor3 = Color3.fromRGB(255, 2045 - (573 + 1217), 706 - 451);
+	v86.TextSize = 2 + 12;
+	v86.Text = v7("\34\239\77\92\120\8\233\79\31\70\40\169\6\17", "\19\97\135\40\63");
+	v86.Parent = v70;
+	local function v96()
+		local v106, v107 = v26();
+		if (v106 and v107) then
+			local FlatIdent_985A2 = 0;
+			local v128;
+			local v129;
+			while true do
+				if (FlatIdent_985A2 ~= 1) then
+				else
+					while true do
+						if (v128 ~= 0) then
+						else
+							v129 = 0 - 0;
+							while true do
+								if (v129 ~= 0) then
+								else
+									v86.Text = "UI Status: Found ✓";
+									v86.TextColor3 = Color3.fromRGB(0, 1194 - (714 + 225), 0);
+									break;
+								end
+							end
+							break;
+						end
+					end
+					break;
+				end
+				if (FlatIdent_985A2 == 0) then
+					v128 = 0;
+					v129 = nil;
+					FlatIdent_985A2 = 1;
+				end
+			end
+		else
+			local v130 = 0;
+			while true do
+				if (v130 ~= 0) then
+				else
+					v86.Text = "UI Status: Not Found ✗";
+					v86.TextColor3 = Color3.fromRGB(255, 146 - 96, 50);
+					break;
+				end
+			end
+		end
+	end
+	local v97;
+	local function v98()
+		local v108 = 0 - 0;
+		while true do
+			if (v108 == 0) then
+				if v97 then
+					return;
+				end
+				v97 = task.spawn(function()
+					while v70.Parent do
+						local FlatIdent_803FB = 0;
+						local v159;
+						while true do
+							if (FlatIdent_803FB ~= 0) then
+							else
+								v159 = 0 + 0;
+								while true do
+									if (v159 == (0 - 0)) then
+										v96();
+										task.wait(808 - (118 + 688));
+										break;
+									end
+								end
+								break;
+							end
+						end
+					end
+				end);
+				break;
+			end
+		end
+	end
+	local v99, v100 = false, nil;
+	local function v101()
+		local FlatIdent_2BE68 = 0;
+		local v109;
+		local v110;
+		while true do
+			if (FlatIdent_2BE68 ~= 0) then
+			else
+				v109 = 48 - (25 + 23);
+				v110 = nil;
+				FlatIdent_2BE68 = 1;
+			end
+			if (FlatIdent_2BE68 ~= 1) then
+			else
+				while true do
+					if (v109 ~= 0) then
+					else
+						v110 = 0;
+						while true do
+							local v152 = 0 + 0;
+							while true do
+								if (v152 ~= (1887 - (927 + 959))) then
+								else
+									if (v110 ~= (3 - 2)) then
+									else
+										local FlatIdent_835BC = 0;
+										while true do
+											if (FlatIdent_835BC ~= 1) then
+											else
+												v110 = 2;
+												break;
+											end
+											if (0 ~= FlatIdent_835BC) then
+											else
+												if ((typeof(syn) == v7("\172\35\124\18\33", "\143\216\66\30\126\68\155")) and syn.websocket and syn.websocket.connect) then
+													return syn.websocket.connect;
+												end
+												if ((typeof(WebSocket) == v7("\190\201\15\199\192", "\129\202\168\109\171\165\195\183")) and WebSocket.connect) then
+													return WebSocket.connect;
+												end
+												FlatIdent_835BC = 1;
+											end
+										end
+									end
+									break;
+								end
+								if (v152 == (732 - (16 + 716))) then
+									if (v110 ~= (0 - 0)) then
+									else
+										if (rawget(getfenv() or {}, v7("\153\89\49\8\32\50\165\89\39", "\81\206\60\83\91\79")) and WebSocket.connect) then
+											return WebSocket.connect;
+										end
+										if (rawget(getfenv() or {}, v7("\121\174\210\65\32\192\70\161\90", "\196\46\203\176\18\79\163\45")) and WebSocket.Connect) then
+											return WebSocket.Connect;
+										end
+										v110 = 98 - (11 + 86);
+									end
+									if (v110 == (4 - 2)) then
+										return nil;
+									end
+									v152 = 286 - (175 + 110);
+								end
+							end
+						end
+						break;
+					end
+				end
+				break;
+			end
+		end
+	end
+	local function v102()
+		if v99 then
+			return;
+		end
+		v99 = true;
+		v74.Text = v7("\17\76\54\202\202\84\196\45\86\50\211\223\84\174\13\118\126", "\134\66\56\87\184\190\116");
+		v100 = task.spawn(function()
+			repeat
+				v12.Heartbeat:Wait();
+			until game:IsLoaded() 
+			local v120 = v7("\43\34\83\244\86\186\115\98\114\97\71\235\87\186\123\96\109\104\93\227", "\85\92\81\105\219\121\139\65");
+			local v121 = v101();
+			if not v121 then
+				local FlatIdent_65194 = 0;
+				while true do
+					if (FlatIdent_65194 ~= 0) then
+					else
+						v14(v7("\211\188\16\114\121\221\206\188\83\78\121\203\189\160\69\85\108\208\239\167", "\191\157\211\48\37\28"));
+						return;
+					end
+				end
+			end
+			local v122 = 2 - 1;
+			while v99 do
+				local v131, v132 = pcall(v121, v120);
+				if (v131 and v132) then
+					local v153 = 0 - 0;
+					local v154;
+					while true do
+						if (v153 ~= (1796 - (503 + 1293))) then
+						else
+							v132.OnMessage:Connect(function(v174)
+								local v175 = 0 - 0;
+								local v176;
+								while true do
+									if (v175 ~= (0 + 0)) then
+									else
+										v176 = 1061 - (810 + 251);
+										while true do
+											if (v176 ~= 0) then
+											else
+												v32(v174);
+												v18(function(v186)
+													v30(v186);
+												end);
+												break;
+											end
+										end
+										break;
+									end
+								end
+							end);
+							v154 = false;
+							v153 = 1 + 0;
+						end
+						if (v153 ~= (1 + 0)) then
+						else
+							v132.OnClose:Connect(function()
+								v154 = true;
+							end);
+							while v132 and not v154 and v99 do
+								v12.Heartbeat:Wait();
+							end
+							v153 = 2;
+						end
+						if (v153 ~= (2 + 0)) then
+						else
+							v122 = 1;
+							break;
+						end
+					end
+				else
+					local FlatIdent_163A8 = 0;
+					local v155;
+					while true do
+						if (FlatIdent_163A8 ~= 0) then
+						else
+							v155 = 533 - (43 + 490);
+							while true do
+								if (v155 ~= (733 - (711 + 22))) then
+								else
+									for v177 = 1, math.max(3 - 2, math.floor((v122 or (860 - (240 + 619))) * (15 + 45))) do
+										v12.Heartbeat:Wait();
+									end
+									v122 = math.clamp((v122 or (1 - 0)) * 2, 1 + 0, 10);
+									break;
+								end
+							end
+							break;
+						end
+					end
+				end
+			end
+		end);
+	end
+	local function v103()
+		local v112 = 0;
+		local v113;
+		while true do
+			if (v112 ~= 0) then
+			else
+				v113 = 1744 - (1344 + 400);
+				while true do
+					if ((405 - (255 + 150)) ~= v113) then
+					else
+						local FlatIdent_3121 = 0;
+						while true do
+							if (FlatIdent_3121 == 1) then
+								v113 = 1 + 0;
+								break;
+							end
+							if (FlatIdent_3121 ~= 0) then
+							else
+								if not v99 then
+									return;
+								end
+								v99 = false;
+								FlatIdent_3121 = 1;
+							end
+						end
+					end
+					if (1 ~= v113) then
+					else
+						v74.Text = v7("\236\11\245\14\46\159\61\251\18\63\212\30\180\84\21\249\57\189", "\90\191\127\148\124");
+						if v100 then
+							local FlatIdent_1BB5D = 0;
+							local v178;
+							while true do
+								if (FlatIdent_1BB5D ~= 0) then
+								else
+									v178 = 0;
+									while true do
+										if (v178 ~= (0 + 0)) then
+										else
+											task.cancel(v100);
+											v100 = nil;
+											break;
+										end
+									end
+									break;
+								end
+							end
+						end
+						break;
+					end
+				end
+				break;
+			end
+		end
+	end
+	v74.MouseButton1Click:Connect(function()
+		if v74.Text:find(v7("\48\168\8\49\49", "\119\24\231\78"), 1, true) then
+			v102();
+		else
+			v103();
+		end
+	end);
+	v98();
+	v11.InputBegan:Connect(function(v114, v115)
+		local FlatIdent_1D701 = 0;
+		local v116;
+		while true do
+			if (FlatIdent_1D701 ~= 0) then
+			else
+				v116 = 0;
+				while true do
+					if (v116 ~= (0 - 0)) then
+					else
+						if v115 then
+							return;
+						end
+						if (v114.KeyCode ~= Enum.KeyCode.Delete) then
+						else
+							local v160 = 0 - 0;
+							while true do
+								if (v160 ~= 1) then
+								else
+									v70:Destroy();
+									break;
+								end
+								if ((1739 - (404 + 1335)) ~= v160) then
+								else
+									v103();
+									if v97 then
+										task.cancel(v97);
+									end
+									v160 = 407 - (183 + 223);
+								end
+							end
+						end
+						break;
+					end
+				end
+				break;
+			end
+		end
+	end);
+end
+local function v34()
+	v33();
+end
+if game:IsLoaded() then
+	v34();
+else
+	game.Loaded:Once(v34);
+end
